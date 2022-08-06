@@ -1,13 +1,18 @@
-const express = require('express');
+const content = require('fs').readFileSync(__dirname + '/index.html', 'utf8');
 
-const app = express();
-const port = 4000;
-
-app.get('/', (req, res) => {        //get requests to the root ("/") will route here
-    res.sendFile('index.html', {root: __dirname});      //server responds by sending the index.html file to the client's browser
-                                                        //the .sendFile method needs the absolute path to the file, see: https://expressjs.com/en/4x/api.html#res.sendFile
+const httpServer = require('http').createServer((req, res) => {
+    // serve the index.html file
+    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Content-Length', Buffer.byteLength(content));
+    res.end(content);
 });
 
-app.listen(port, () => {            //server starts listening for any attempts from a client to connect at port: {port}
-    console.log(`Now listening on port ${port}`);
+const io = require('socket.io')(httpServer);
+
+io.on('connection', socket => {
+    console.log('connecte');
+});
+
+httpServer.listen(4000, () => {
+    console.log('go to http://localhost:4000');
 });
