@@ -1,0 +1,23 @@
+{
+  "name": "weather_wizzard",
+  "version": "1.0.0",
+  "description": "Weather api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "N.Khedr",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eKonis-src/WeatherWizzard.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eKonis-src/WeatherWizzard/issues"
+  },
+  "homepage": "https://github.com/eKonis-src/WeatherWizzard#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
