@@ -7,4 +7,4 @@ Run the project using
 npm install
 node index.js
 ```
-Then reach to [localhost](localhost:4000)
+Then reach to [localhost:4000](localhost:4000)
