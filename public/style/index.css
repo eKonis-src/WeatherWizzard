@@ -1,0 +1,19 @@
+.night-bg {
+    background-color: #181636;
+}
+
+.sunny-bg {
+    background-color: #1b86ed;
+}
+
+.cloudy-bg {
+    background-color: #76a9ce;
+}
+
+.clouds-bg{
+    filter: blur(8px);
+    z-index: 1;
+}
+.clouds-fg{
+    z-index: 2;
+}

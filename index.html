@@ -2,10 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/style/index.css">
     <title>Minimal working example</title>
 </head>
-<body>
+<body class="sunny-bg">
 <ul id="events"></ul>
+<div style="display: flex">
+</div>
+</body>
+</html>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
@@ -17,11 +22,15 @@
         return item;
     };
 
+    const backgroundUpdate = (value) => {
+        const equivalents = ["night-bg","sunny-bg","cloudy-bg"];
+        document.body.className = equivalents[value];
+    }
+
     const socket = io();
 
     socket.on('connect', () => {
         $events.appendChild(newItem('connect'));
+        backgroundUpdate(2);
     });
 </script>
-</body>
-</html>
