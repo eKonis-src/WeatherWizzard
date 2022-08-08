@@ -8,6 +8,9 @@
 <body class="sunny-bg">
 <ul id="events"></ul>
 <div style="display: flex">
+    <h2 id="CityName">PlaceHolder</h2>
+    <img src="" id="WeatherImg">
+    <h2 id="Temperature"></h2>
 </div>
 </body>
 </html>
@@ -33,12 +36,26 @@
     const socket = io();
     socket.on('wdata', (data) =>
     {
+        const parsed = JSON.parse(data);
+        document.getElementById("CityName").innerText = parsed["location"]["name"];
+        document.getElementById("WeatherImg").src = parsed["current"]["condition"]["icon"];
+        document.getElementById("Temperature").innerText = parsed["current"]["temp_c"] + "ºC";
+        if(parsed['current']['is_day'] === 1){
+            if(parsed['current']['condition']['text'].includes("rain")
+                || parsed['current']['condition']['text'].includes("cloudy")){
+                backgroundUpdate(2);
+            }
+            backgroundUpdate(1);
+        }
+        else
+        {
+            backgroundUpdate(0);
+        }
         const item = document.createElement("p");
         item.innerText = data;
         document.body.appendChild(item);
     });
     socket.on('connect', () => {
         socket.emit('refresh');
-        backgroundUpdate(2);
     });
 </script>

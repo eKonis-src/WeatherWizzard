@@ -13,15 +13,16 @@ app.get('/', function(req, res,next) {
 });
 
 var weather = {};
+getCityWeather();
 
 function getCityWeather() {
-    var nbCity = 1443;
+    var nbCity = 20909;
     const offset = Math.floor(Math.random() * nbCity);
     var dt;
     const options = {
         method: 'GET',
         url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities',
-        qs: {countryIds: 'fr', minPopulation: '10000', offset: offset},
+        qs: {minPopulation: '50000', offset: offset},
         headers: {
             'X-RapidAPI-Key': 'f2244b30fbmshb0c5a9a4dd0e43bp1d631cjsna12d6dba4832',
             'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',

@@ -1,12 +1,27 @@
 .night-bg {
+    color: aliceblue;
+    -webkit-transition: all 2s ease-out;
+    -moz-transition: all 2s ease-out;
+    -o-transition: all 2s ease-out;
+    transition: all 2s ease-out;
     background-color: #181636;
 }
 
 .sunny-bg {
+    color: #191919;
+    -webkit-transition: all 2s ease-out;
+    -moz-transition: all 2s ease-out;
+    -o-transition: all 2s ease-out;
+    transition: all 2s ease-out;
     background-color: #1b86ed;
 }
 
 .cloudy-bg {
+    color: #191919;
+    -webkit-transition: all 2s ease-out;
+    -moz-transition: all 2s ease-out;
+    -o-transition: all 2s ease-out;
+    transition: all 2s ease-out;
     background-color: #76a9ce;
 }
 
