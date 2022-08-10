@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" type="image/x-icon" href="/imgs/favico.png">
     <link rel="stylesheet" type="text/css" href="/style/index.css">
     <link rel="stylesheet" type="text/css" href="/style/stars.css">
     <link rel="stylesheet" type="text/css" href="/style/flare.css">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
-    <title>Minimal working example</title>
+    <title>WeatherWizzard</title>
 </head>
 
 <body class="black" id="sky">
@@ -53,73 +54,24 @@
 </html>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-<script type="text/javascript" src="/rain.js"></script>
+<script type="text/javascript" src="/js/rain.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
     setInterval(function() {
         socket.emit('refresh');
     }, 30000);
 
-    const backgroundUpdate = (value) => {
-        const equivalents = ["night-bg","sunny-bg","cloudy-bg"];
-        document.body.className = equivalents[value];
-    }
-
     const socket = io();
     socket.on('wdata', (data) =>
     {
         const parsed = JSON.parse(data);
         var meteoText = parsed['current']['condition']['text'];
-        document.getElementById("CityName").innerText = parsed["location"]["name"];
-        document.getElementById("Country").innerText = parsed["location"]["country"];
-        document.getElementById("ConditionText").innerText = meteoText;
-        document.getElementById("Temperature").innerText = parsed["current"]["temp_c"] + "ºC";
-        if(meteoText.includes("rain") || meteoText.includes("thunder")) {
-            createRain();
-        }
-        else {
-            stopRain();
-        }
-        if(parsed['current']['is_day'] === 1){
-            document.getElementById("main-container").style.visibility = 'hidden';
-            if(meteoText.includes("Sunny") || meteoText.includes("Clear")){
-                document.getElementById("sunny").style.visibility = 'visible';
-                document.getElementById("clouds-container").style.visibility = 'hidden';
-                backgroundUpdate(1);
-            }
-            else {
-                document.getElementById("sunny").style.visibility = 'hidden';
-                document.getElementById("clouds-container").style.visibility = 'visible';
-                runClouds();
-                backgroundUpdate(2);
-            }
-        }
-        else
-        {
-            document.getElementById("sunny").style.visibility = 'hidden';
-            if(meteoText.includes("cloudy"))
-            {
-                document.getElementById("clouds-container").style.visibility = 'visible';
-                runClouds();
-            }
-            else {
-                document.getElementById("clouds-container").style.visibility = 'hidden';
-            }
-            document.getElementById("main-container").style.visibility = 'visible';
-            backgroundUpdate(0);
-        }
+        updateTexts(parsed)
+        meteoUpdate(meteoText, parsed['current']['is_day'])
     });
     socket.on('connect', () => {
         socket.emit('refresh');
     });
 
-    function runClouds()
-    {
-        var clouds = document.getElementsByTagName("cloud");
-        for (let i = 0; i < clouds.length; i++)
-        {
-            clouds[i].style.position = 'relative';
-            clouds[i].style.position = 'absolute'
-        }
-    }
 </script>
