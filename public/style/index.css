@@ -1,28 +1,40 @@
-.night-bg {
-    color: aliceblue;
+#sky {
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     -webkit-transition: all 2s ease-out;
     -moz-transition: all 2s ease-out;
     -o-transition: all 2s ease-out;
     transition: all 2s ease-out;
-    background-color: #181636;
+
+}
+
+#bd-blur {
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.black {
+    background-color: #191919;
+    color: aliceblue;
+}
+
+.night-bg {
+    background: linear-gradient(to bottom, #14111e 0%, #0d073b 100%);
 }
 
 .sunny-bg {
-    color: #191919;
-    -webkit-transition: all 2s ease-out;
-    -moz-transition: all 2s ease-out;
-    -o-transition: all 2s ease-out;
-    transition: all 2s ease-out;
-    background-color: #1b86ed;
+    background: linear-gradient(to bottom, #1e66ab 0%, #1b86ed 100%);
 }
 
 .cloudy-bg {
-    color: #191919;
     -webkit-transition: all 2s ease-out;
     -moz-transition: all 2s ease-out;
     -o-transition: all 2s ease-out;
     transition: all 2s ease-out;
-    background-color: #76a9ce;
+    background: linear-gradient(to bottom, #9ecbea 0%, #76a9ce 100%);
 }
 
 .clouds-bg{
@@ -31,4 +43,86 @@
 }
 .clouds-fg{
     z-index: 2;
+}
+
+body{
+    color: aliceblue;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+html{
+    height:100%;
+    font-family: Raleway;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    text-align: center;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    height: 300px;
+    width: 150px;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+hr{
+    width: 50px;
+    border-color: transparent;
+    border-right-color: rgba(255, 255, 255, 0.7);
+    border-right-width: 50px;
+    position: absolute;
+    bottom: 100%;
+    transform-origin: 100% 50%;
+    animation-name: rain;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+}
+
+@keyframes rain {
+    from {
+        transform: rotate(105deg) translateX(0);
+    }
+
+    to {
+        transform: rotate(105deg) translateX(calc(100vh + 20px));
+    }
+}
+
+.clouds{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.clouds img{
+    position: absolute;
+    bottom: 0;
+    max-width: 100%;
+    animation: cds calc(8s * (var(--i) + 1)) linear infinite;
+}
+@keyframes cds {
+    0%
+    {
+        transform: translateX(-100%);
+    }
+    100%
+    {
+        transform: translateX(100%);
+    }
+    
 }

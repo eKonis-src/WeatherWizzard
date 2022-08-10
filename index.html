@@ -3,30 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/style/index.css">
+    <link rel="stylesheet" type="text/css" href="/style/stars.css">
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
     <title>Minimal working example</title>
 </head>
-<body class="sunny-bg">
-<ul id="events"></ul>
-<div style="display: flex">
-    <h2 id="CityName">PlaceHolder</h2>
-    <img src="" id="WeatherImg">
-    <h2 id="Temperature"></h2>
-</div>
+
+<body class="black" id="sky">
+    <section class="rain" id="rain">
+    </section>
+    <div class="light">
+        <div class="flare one">
+            <div class="flare two">
+                <div class="flare five"></div>
+                <div class="flare six"></div>
+                <div class="flare three">
+                    <div class="flare four">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-container" id="main-container">
+        <div class="sub-container">
+            <div class="sky">
+                <div class="stars"></div>
+                <div class="stars2"></div>
+                <div class="stars3"></div>
+                <div class="comet"></div>
+            </div>
+        </div>
+    </div>
+    <div id="bd-blur">
+        <div class="main">
+            <h2 id="CityName">PlaceHolder</h2>
+            <h2 id="ConditionText"></h2>
+            <h1 id="Temperature"></h1>
+        </div>
+    </div>
+    <div class="clouds" id="clouds-container">
+        <img class="cloud" src="/imgs/cloud1.png" style="--i:1">
+        <img class="cloud" src="/imgs/cloud2.png" style="--i:2">
+        <img class="cloud" src="/imgs/cloud3.png" style="--i:3">
+        <img class="cloud" src="/imgs/cloud4.png" style="--i:4">
+        <img class="cloud" src="/imgs/cloud5.png" style="--i:5">
+    </div>
 </body>
 </html>
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript" src="/rain.js"></script>
 <script src="/socket.io/socket.io.js"></script>
 <script>
     setInterval(function() {
         socket.emit('refresh');
     }, 30000);
-    const $events = document.getElementById('events');
-
-    const newItem = (content) => {
-        const item = document.createElement('li');
-        item.innerText = content;
-        return item;
-    };
 
     const backgroundUpdate = (value) => {
         const equivalents = ["night-bg","sunny-bg","cloudy-bg"];
@@ -37,25 +67,53 @@
     socket.on('wdata', (data) =>
     {
         const parsed = JSON.parse(data);
+        var meteoText = parsed['current']['condition']['text'];
         document.getElementById("CityName").innerText = parsed["location"]["name"];
-        document.getElementById("WeatherImg").src = parsed["current"]["condition"]["icon"];
+        document.getElementById("ConditionText").innerText = meteoText;
         document.getElementById("Temperature").innerText = parsed["current"]["temp_c"] + "ºC";
+        if(meteoText.includes("rain") || meteoText.includes("thunder")) {
+            createRain();
+        }
+        else {
+            stopRain();
+        }
         if(parsed['current']['is_day'] === 1){
-            if(parsed['current']['condition']['text'].includes("rain")
-                || parsed['current']['condition']['text'].includes("cloudy")){
+            document.getElementById("main-container").style.visibility = 'hidden';
+            if(meteoText.includes("Sunny") || meteoText.includes("Clear")){
+                document.getElementById("clouds-container").style.visibility = 'hidden';
+                backgroundUpdate(1);
+            }
+            else {
+                document.getElementById("clouds-container").style.visibility = 'visible';
+                runClouds();
                 backgroundUpdate(2);
             }
-            backgroundUpdate(1);
         }
         else
         {
+            if(meteoText.includes("cloudy"))
+            {
+                document.getElementById("clouds-container").style.visibility = 'visible';
+                runClouds();
+            }
+            else {
+                document.getElementById("clouds-container").style.visibility = 'hidden';
+            }
+            document.getElementById("main-container").style.visibility = 'visible';
             backgroundUpdate(0);
         }
-        const item = document.createElement("p");
-        item.innerText = data;
-        document.body.appendChild(item);
     });
     socket.on('connect', () => {
         socket.emit('refresh');
     });
+
+    function runClouds()
+    {
+        var clouds = document.getElementsByTagName("cloud");
+        for (let i = 0; i < clouds.length; i++)
+        {
+            clouds[i].style.position = 'relative';
+            clouds[i].style.position = 'absolute'
+        }
+    }
 </script>
