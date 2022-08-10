@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/style/index.css">
     <link rel="stylesheet" type="text/css" href="/style/stars.css">
+    <link rel="stylesheet" type="text/css" href="/style/flare.css">
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
     <title>Minimal working example</title>
 </head>
@@ -11,7 +12,7 @@
 <body class="black" id="sky">
     <section class="rain" id="rain">
     </section>
-    <div class="light">
+    <div class="light" id="sunny">
         <div class="flare one">
             <div class="flare two">
                 <div class="flare five"></div>
@@ -35,7 +36,8 @@
     </div>
     <div id="bd-blur">
         <div class="main">
-            <h2 id="CityName">PlaceHolder</h2>
+            <h2 id="CityName">UnknownCity</h2>
+            <h3 id="Country"></h3>
             <h2 id="ConditionText"></h2>
             <h1 id="Temperature"></h1>
         </div>
@@ -69,6 +71,7 @@
         const parsed = JSON.parse(data);
         var meteoText = parsed['current']['condition']['text'];
         document.getElementById("CityName").innerText = parsed["location"]["name"];
+        document.getElementById("Country").innerText = parsed["location"]["country"];
         document.getElementById("ConditionText").innerText = meteoText;
         document.getElementById("Temperature").innerText = parsed["current"]["temp_c"] + "ºC";
         if(meteoText.includes("rain") || meteoText.includes("thunder")) {
@@ -80,10 +83,12 @@
         if(parsed['current']['is_day'] === 1){
             document.getElementById("main-container").style.visibility = 'hidden';
             if(meteoText.includes("Sunny") || meteoText.includes("Clear")){
+                document.getElementById("sunny").style.visibility = 'visible';
                 document.getElementById("clouds-container").style.visibility = 'hidden';
                 backgroundUpdate(1);
             }
             else {
+                document.getElementById("sunny").style.visibility = 'hidden';
                 document.getElementById("clouds-container").style.visibility = 'visible';
                 runClouds();
                 backgroundUpdate(2);
@@ -91,6 +96,7 @@
         }
         else
         {
+            document.getElementById("sunny").style.visibility = 'hidden';
             if(meteoText.includes("cloudy"))
             {
                 document.getElementById("clouds-container").style.visibility = 'visible';

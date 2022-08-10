@@ -50,6 +50,11 @@ body{
     height: 100%;
     margin: 0;
     overflow: hidden;
+    text-shadow: -1px -1px 0 rgba(255, 255, 255, 0.02), 1px -1px 0 rgba(255, 255, 255, 0.02);, -1px 1px 0 rgba(255, 255, 255, 0.02);, 1px 1px 0 rgba(255, 255, 255, 0.02);;
+}
+
+#Country{
+    margin-top: -15px;
 }
 
 html{
@@ -63,6 +68,8 @@ html{
     align-self: center;
     text-align: center;
     position: absolute;
+    justify-content: center;
+    overflow: auto;
     left: 50%;
     top: 50%;
     height: 300px;
@@ -75,6 +82,16 @@ html{
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+#CityName{
+    z-index: 8;
+}
+#ConditionText{
+    z-index: 8;
+}
+#Temperature{
+    z-index: 8;
 }
 
 hr{
