@@ -2,8 +2,11 @@ const request = require('request');
 const express = require("express");
 const path = require("path");
 const app = express();
-
 const httpServer = require('http').createServer(app);
+const fs = require('fs');
+
+let rawdata = fs.readFileSync('Credentials.json');
+let creds = JSON.parse(rawdata);
 
 const io = require('socket.io')(httpServer);
 
@@ -13,6 +16,9 @@ app.get('/', function(req, res,next) {
 });
 
 var weather = {};
+var weatherKey = creds["keys"]["weather"];
+var cityKey = creds["keys"]["city"];
+
 getCityWeather();
 
 function getCityWeather() {
@@ -24,7 +30,7 @@ function getCityWeather() {
         url: 'https://wft-geo-db.p.rapidapi.com/v1/geo/cities',
         qs: {minPopulation: '50000', offset: offset},
         headers: {
-            'X-RapidAPI-Key': 'f2244b30fbmshb0c5a9a4dd0e43bp1d631cjsna12d6dba4832',
+            'X-RapidAPI-Key': cityKey,
             'X-RapidAPI-Host': 'wft-geo-db.p.rapidapi.com',
             useQueryString: true
         }
@@ -40,7 +46,7 @@ function getCityWeather() {
             url: 'https://weatherapi-com.p.rapidapi.com/current.json',
             qs: {q: city},
             headers: {
-                'X-RapidAPI-Key': 'f2244b30fbmshb0c5a9a4dd0e43bp1d631cjsna12d6dba4832',
+                'X-RapidAPI-Key': weatherKey,
                 'X-RapidAPI-Host': 'weatherapi-com.p.rapidapi.com',
                 useQueryString: true
             }
@@ -66,3 +72,4 @@ io.on('connection', socket => {
 httpServer.listen(4000, () => {
     console.log('go to http://localhost:4000');
 });
+
