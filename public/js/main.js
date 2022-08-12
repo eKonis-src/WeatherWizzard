@@ -1,3 +1,9 @@
+var rainSound = new Audio("/audio/Rain.mp3");
+var nightSound = new Audio("/audio/Night.mp3");
+var cloudsSound = new Audio("/audio/Clouds.mp3");
+var sunnySound = new Audio("/audio/Sunny.mp3");
+
+
 const backgroundUpdate = (value) => {
     const equivalents = ["night-bg","sunny-bg","cloudy-bg"];
     document.body.className = equivalents[value];
@@ -33,7 +39,12 @@ function updateTexts(parsed)
 
 function meteoUpdate(meteoText, isDay)
 {
+    rainSound.pause();
+    nightSound.pause();
+    cloudsSound.pause();
+    sunnySound.pause();
     if(meteoText.includes("rain") || meteoText.includes("thunder")) {
+        rainSound.play();
         createRain();
     }
     else {
@@ -41,6 +52,7 @@ function meteoUpdate(meteoText, isDay)
     }
     weatherCondition(meteoText)
     if(isDay !== 1) {
+        nightSound.play();
         document.getElementById("sunny").style.visibility = 'hidden';
         document.getElementById("main-container").style.visibility = 'visible';
         backgroundUpdate(0);
@@ -53,11 +65,13 @@ function meteoUpdate(meteoText, isDay)
 function weatherCondition(meteoText)
 {
     if(meteoText.includes("Sunny") || meteoText.includes("Clear")){
+        sunnySound.play();
         document.getElementById("sunny").style.visibility = 'visible';
         document.getElementById("clouds-container").style.visibility = 'hidden';
         backgroundUpdate(1);
     }
     else {
+        cloudsSound.play();
         document.getElementById("sunny").style.visibility = 'hidden';
         document.getElementById("clouds-container").style.visibility = 'visible';
         runClouds();
