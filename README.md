@@ -1,7 +1,7 @@
 # WeatherWizzard
 Web Weather project
 
-First of all, get some api keys from RapidAPI
+First, get some api keys from RapidAPI
 
 [weatherAPI](https://rapidapi.com/weatherapi/api/weatherapi-com/)
 
@@ -23,4 +23,7 @@ Run the project using
 npm install
 node index.js
 ```
+
 Then reach to [localhost:4000](localhost:4000)
+
+(You may want to enable auto audioplayback)
