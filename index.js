@@ -40,7 +40,12 @@ function getCityWeather() {
         if (error) throw new Error(error);
 
         const parsed = JSON.parse(body);
-        const city = parsed['data'][0]['name'];
+        var city;
+        try {
+            city = parsed['data'][0]['name'];
+        } catch (e) {
+            city = "Paris";
+        }
         const option = {
             method: 'GET',
             url: 'https://weatherapi-com.p.rapidapi.com/current.json',

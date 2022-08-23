@@ -3,7 +3,25 @@ var nightSound = new Audio("/audio/Night.mp3");
 var cloudsSound = new Audio("/audio/Clouds.mp3");
 var sunnySound = new Audio("/audio/Sunny.mp3");
 
+rainSound.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
 
+nightSound.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
+
+cloudsSound.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
+
+sunnySound.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
 const backgroundUpdate = (value) => {
     const equivalents = ["night-bg","sunny-bg","cloudy-bg"];
     document.body.className = equivalents[value];
